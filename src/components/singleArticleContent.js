@@ -8,7 +8,6 @@ const _ = require('lodash');
 
 const ArticalContent = ({ article }) => {
   const { name } = article.articleCategories.nodes[0]
-  console.log("data", name) 
 
   return (
     <div className="articalReadSectionMain p-4">
@@ -16,11 +15,11 @@ const ArticalContent = ({ article }) => {
             <p className="articalCategory">{name}</p>
             <h1 className="articalNameHeaderText">{article.title}</h1>
             <p className="articalDate"><Moment format="MMM Do YYYY">{article.published_at}</Moment></p>
-            {/* <GatsbyImage
+            <GatsbyImage
                       className="articalImage"
-                      image={article.image.childImageSharp.gatsbyImageData}
+                      image={article.article.articleImage.localFile.childImageSharp.gatsbyImageData}
                       alt={article.title}
-                    /> */}
+                    />
         </div>
         {
           article.article.products.map((prod,i) => {

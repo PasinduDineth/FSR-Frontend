@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
                 <h5 className="cardTitle mb-0 pb-2">CATEGORIES</h5>
                 <hr className="hr"/>
                 <ListGroup className="categoryMain">
-                {categoryData.wordPress.articleCategories.nodes.map((category, i) => (
+                {categoryData.allWpArticleCategory.nodes.map((category, i) => (
                     <ListGroupItem className="categoryItem" tag="button" action><span uk-icon="icon: triangle-right" className="icon"></span><Link to={`/category/${category.slug}`}> {category.name}</Link></ListGroupItem>
                   ))}
                 </ListGroup>
@@ -33,32 +33,14 @@ export default props => (
     <StaticQuery
         query={graphql
           `
-          query {
-            wordPress {
-                articleCategories {
-                  nodes {
-                    articleCategoryId
-                    name
-                    slug
-                  }
-                }
-                pages {
-                  edges {
-                    node {
-                      basicSettings {
-                        fieldGroupName
-                        siteTitle
-                        heroTitle
-                        siteMetaDescription
-                        favicon {
-                          link
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+        query {
+          allWpArticleCategory {
+            nodes {
+              name
+              slug
+            }
           }
+        }
         `    
         }
         render={( data ) => <Sidebar categoryData={data} {...props} />}

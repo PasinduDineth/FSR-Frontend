@@ -32,13 +32,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const articlesResult = await graphql(
     `
     {
-      wordPress {
-        articles {
-          nodes {
-            title
-            id
-            slug
-          }
+      allWpArticle {
+        nodes {
+          title
+          id
+          link
+          slug
         }
       }
     }
@@ -47,33 +46,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // fetching category from WP
   const categoryResult = await graphql(
     `
-  {
-    wordPress {
-      articleCategories {
+    query MyQuery {
+      allWpArticleCategory {
         nodes {
-          articleCategoryId
           name
           slug
+          id
         }
       }
     }
-  }
     `
   )
 
-  // // fetching tags from WP
-  // const tagsResult = await graphql(
-  //   `{
-  //   allStrapiArticle {
-  //     edges {
-  //       node {
-  //         SeoTags
-  //       }
-  //     }
-  //   }
-  // }
-  //   `
-  // )
+  // fetching tags from WP
+  const tagsResult = await graphql(
+    `{
+      allWpArticle {
+        nodes {
+          article {
+            seoTags
+          }
+        }
+      }
+  }
+    `
+  )
   
   // // checking erros
   // if (articlesResult.errors || categoryResult.errors || tagsResult.errors) {
@@ -83,7 +80,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // creating article pages
   const blogPostTemplate = path.resolve(`src/templates/article.js`)
-  articlesResult.data.wordPress.articles.nodes.forEach(( node ) => {
+  articlesResult.data.allWpArticle.nodes.forEach(( node ) => {
     createPage({
       path: `/review/${node.slug}`,
       component: blogPostTemplate,
@@ -95,7 +92,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // creating category pages
   const categoryTemplate = path.resolve(`src/templates/category.js`)
-  categoryResult.data.wordPress.articleCategories.nodes.forEach((node ) => {
+  categoryResult.data.allWpArticleCategory.nodes.forEach((node ) => {
     createPage({
       path: `/category/${node.slug}`,
       component: categoryTemplate,
@@ -105,22 +102,22 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
-  // // creating custom tag pages
-  // const tagTemplate = path.resolve(`src/templates/tag.js`)
-  // let tags = []
-  // tagsResult.data.allStrapiArticle.edges.forEach(({ node }) => {
-  //   node.SeoTags && node.SeoTags.split(',').map(el=> {
-  //     tags.push(el.trim())
-  //   })
-  // })
-  // _.uniq(tags).forEach((tag) => {
-  //   createPage({
-  //     path: `/tag/${_.kebabCase(tag)}`,
-  //     component: tagTemplate,
-  //     context: {
-  //       name: "\/".concat(tag).concat("\/"),
-  //     },
-  //   })
-  // })
+  // creating custom tag pages
+  const tagTemplate = path.resolve(`src/templates/tag.js`)
+  let tags = []
+  tagsResult.data.allWpArticle.nodes.forEach(({ article }) => {
+    article.seoTags && article.seoTags.split(',').map(el=> {
+      tags.push(el.trim())
+    })
+  })
+  _.uniq(tags).forEach((tag) => {
+    createPage({
+      path: `/tag/${_.kebabCase(tag)}`,
+      component: tagTemplate,
+      context: {
+        name: "\/".concat(tag).concat("\/"),
+      },
+    })
+  })
 }
   

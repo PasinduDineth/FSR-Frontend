@@ -7,17 +7,17 @@ import "../styles/main.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const HomePageArticalsList = ({ articles }) => {
+const HomePageArticalsList = ({articles}) => {
   return (
     <div className="container mt-3">
-        {articles.nodes.map((article, i) => {
+        {articles.map((article, i) => {
               return (
                 <div className="item" key={article.id}>
                   <Card className="card">
                     <GatsbyImage
                       className="cardImage"
                       alt={article.title}
-                      image={article.article.articleImage}
+                      image={article.article.articleImage.localFile.childImageSharp.gatsbyImageData}
                     />
                     {article.article.offerText &&
                       <div className="card-img-overlay specialOfferContainer">

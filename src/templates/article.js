@@ -9,12 +9,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/main.scss'
 
 export default function BlogPost({ data }) {
-    const { wordPress } = data;
-    const { articleBy } = wordPress;
+    const { allWpArticle } = data;
+    const { nodes } = allWpArticle;
     const seo = {
-        metaTitle: articleBy.title,
-        metaDescription: articleBy.description,
-        shareImage: articleBy.article.articleImage.sourceUrl,
+        metaTitle: nodes.title,
+        metaDescription: nodes.description,
+        shareImage: nodes[0].article.articleImage.sourceUrl,
         article: true,
     };
     return (
@@ -23,7 +23,7 @@ export default function BlogPost({ data }) {
                 <JumbotronArtical data="Test"/>
                 <div className="articalMain">
                     <div className="articalSection">
-                        {articleBy.article.isArticleContainSingleProduct ? <SingleArticleContent article={articleBy}/> :<ArticleContent article={articleBy} />}
+                        {nodes[0].article.isArticleContainSingleProduct ? <SingleArticleContent article={nodes[0]}/> :<ArticleContent article={nodes[0]} />}
                     </div>
                     <div className="sidebarSection">
                         <Sidebar />
@@ -35,19 +35,9 @@ export default function BlogPost({ data }) {
   }
   export const query = graphql`
   query ArticleQuery($slug: String!) {
-    wordPress {
-        articleBy(slug: $slug) {
-            articleCategories {
-                nodes {
-                  articleCategoryId
-                  name
-                }
-              }
-            articleId
-            content
-            date
-            link
-            id
+        allWpArticle(filter: {slug: {eq: $slug}}) {
+          nodes {
+            title
             article {
               description
               fieldGroupName
@@ -55,29 +45,29 @@ export default function BlogPost({ data }) {
               offerText
               postSlug
               products {
-                ... on WordPress_Product {
+                ... on WpProduct {
                   id
                   content
-                  productId
-                  title
+                  link
                   slug
+                  title
                   products {
                     adSlot
                     buttonLink
-                    fieldGroupName
-                    productImage
                     cons {
                       conContent
                       fieldGroupName
                     }
                     features {
+                      fieldGroupName
                       feature {
                         featureData
                         featureName
                         fieldGroupName
                       }
-                      fieldGroupName
                     }
+                    fieldGroupName
+                    productImage
                     pros {
                       fieldGroupName
                       proContent
@@ -95,21 +85,36 @@ export default function BlogPost({ data }) {
                       specification
                     }
                   }
+                  status
                 }
-              }
-              articleImage {
-                altText
-                authorId
-                description
-                id
-                link
-                sourceUrl
               }
               publishDate
               seoTags
+              articleImage {
+                localFile {
+                  childImageSharp {
+                    gatsbyImageData
+                  }
+                }
+                altText
+                description
+                id
+                slug
+                title
+              }
             }
-            title
-        }
-      }
+            articleCategories {
+              nodes {
+                id
+                name
+                slug
+              }
+            }
+            id
+            link
+            slug
+            content
+          }
+    }
   }
 `
