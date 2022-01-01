@@ -8,7 +8,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { graphql, StaticQuery, Link } from "gatsby";
+import { Link } from "gatsby";
 
 class NavigationMenu extends React.Component {
     constructor(props) {
@@ -44,25 +44,4 @@ class NavigationMenu extends React.Component {
 }
 
 
-export default props => (
-    <StaticQuery
-        query={graphql
-          `
-          query {
-            strapiGlobal {
-              siteName
-            }
-            allStrapiCategory {
-              edges {
-                node {
-                  slug
-                  name
-                }
-              }
-            }
-          }
-        `    
-        }
-        render={( data ) => <NavigationMenu {...props} />}
-    />
-);
+export default NavigationMenu;

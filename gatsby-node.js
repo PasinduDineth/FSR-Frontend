@@ -27,28 +27,33 @@ exports.onCreateWebpackConfig = ({
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
+
+  // fetching articles from WP
   const articlesResult = await graphql(
     `
-  {
-    allStrapiArticle {
-      edges {
-        node {
-          id
-          slug
+    {
+      wordPress {
+        articles {
+          nodes {
+            title
+            id
+            slug
+          }
         }
       }
     }
-  }
     `
   )
+  // fetching category from WP
   const categoryResult = await graphql(
     `
   {
-    allStrapiCategory {
-      edges {
-        node {
-          slug
+    wordPress {
+      articleCategories {
+        nodes {
+          articleCategoryId
           name
+          slug
         }
       }
     }
@@ -56,25 +61,29 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
   )
 
-  const tagsResult = await graphql(
-    `{
-    allStrapiArticle {
-      edges {
-        node {
-          SeoTags
-        }
-      }
-    }
-  }
-    `
-  )
+  // // fetching tags from WP
+  // const tagsResult = await graphql(
+  //   `{
+  //   allStrapiArticle {
+  //     edges {
+  //       node {
+  //         SeoTags
+  //       }
+  //     }
+  //   }
+  // }
+  //   `
+  // )
   
-  if (articlesResult.errors || categoryResult.errors || tagsResult.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query.`)
-    return
-  }
+  // // checking erros
+  // if (articlesResult.errors || categoryResult.errors || tagsResult.errors) {
+  //   reporter.panicOnBuild(`Error while running GraphQL query.`)
+  //   return
+  // }
+
+  // creating article pages
   const blogPostTemplate = path.resolve(`src/templates/article.js`)
-  articlesResult.data.allStrapiArticle.edges.forEach(({ node }) => {
+  articlesResult.data.wordPress.articles.nodes.forEach(( node ) => {
     createPage({
       path: `/review/${node.slug}`,
       component: blogPostTemplate,
@@ -83,8 +92,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
+
+  // creating category pages
   const categoryTemplate = path.resolve(`src/templates/category.js`)
-  categoryResult.data.allStrapiCategory.edges.forEach(({ node }) => {
+  categoryResult.data.wordPress.articleCategories.nodes.forEach((node ) => {
     createPage({
       path: `/category/${node.slug}`,
       component: categoryTemplate,
@@ -93,22 +104,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
-  const tagTemplate = path.resolve(`src/templates/tag.js`)
-  let tags = []
-  tagsResult.data.allStrapiArticle.edges.forEach(({ node }) => {
-    node.SeoTags && node.SeoTags.split(',').map(el=> {
-      tags.push(el.trim())
-    })
-  })
-  _.uniq(tags).forEach((tag) => {
-    createPage({
-      path: `/tag/${_.kebabCase(tag)}`,
-      component: tagTemplate,
-      context: {
-        name: "\/".concat(tag).concat("\/"),
-      },
-    })
-  })
 
+  // // creating custom tag pages
+  // const tagTemplate = path.resolve(`src/templates/tag.js`)
+  // let tags = []
+  // tagsResult.data.allStrapiArticle.edges.forEach(({ node }) => {
+  //   node.SeoTags && node.SeoTags.split(',').map(el=> {
+  //     tags.push(el.trim())
+  //   })
+  // })
+  // _.uniq(tags).forEach((tag) => {
+  //   createPage({
+  //     path: `/tag/${_.kebabCase(tag)}`,
+  //     component: tagTemplate,
+  //     context: {
+  //       name: "\/".concat(tag).concat("\/"),
+  //     },
+  //   })
+  // })
 }
   
