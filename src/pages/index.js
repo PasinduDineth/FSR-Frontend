@@ -7,7 +7,7 @@ import Sidebar from "../components/sidebar";
 import "../styles/main.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// @Todo Categories, Tags, Images, Multiple products, sidebar
+// @Todo Multiple products
 
 const IndexPage = () => {
   const data = useStaticQuery(query);
@@ -17,7 +17,7 @@ const IndexPage = () => {
           <JumbotronSection/>
           <div className="articalMain">
               <div className="articalSection">
-                <ArticlesComponent articles={data.wordPress.articles} />
+                <ArticlesComponent articles={data.allWpArticle.nodes} page="HOME" />
               </div>
               <div className="sidebarSection">
                 <Sidebar />
@@ -30,96 +30,98 @@ const IndexPage = () => {
 
 const query = graphql`
 query {
-  wordPress {
-    pages {
-      edges {
-        node {
-          basicSettings {
-            fieldGroupName
-            siteTitle
-            heroTitle
-            siteMetaDescription
-            favicon {
-              link
-            }
-          }
+  allWpPage {
+    nodes {
+      basicSettings {
+        fieldGroupName
+        heroTitle
+        siteMetaDescription
+        siteTitle
+        favicon {
+          link
         }
       }
     }
-    articles {
-      nodes {
-        title
-        articleCategories {
-          nodes {
-            articleCategoryId
-            name
-          }
-        }
-        id
-        slug
-        articleId
-        content
-        date
-        status
-        uri
-        article {
-          description
-          offerText
-          articleImage {
+  }
+  allWpArticle {
+    nodes {
+      title
+      article {
+        description
+        fieldGroupName
+        isArticleContainSingleProduct
+        offerText
+        postSlug
+        products {
+          ... on WpProduct {
             id
+            content
             link
-          }
-          fieldGroupName
-          isArticleContainSingleProduct
-          postSlug
-          products {
-            ... on WordPress_Product {
-              id
-              content
-              date
-              slug
-              title
-              productId
-              products {
-                adSlot
-                buttonLink
+            slug
+            title
+            products {
+              adSlot
+              buttonLink
+              cons {
+                conContent
                 fieldGroupName
-                productImage
-                cons {
-                  conContent
+              }
+              features {
+                fieldGroupName
+                feature {
+                  featureData
+                  featureName
                   fieldGroupName
-                }
-                features {
-                  fieldGroupName
-                  feature {
-                    featureData
-                    featureName
-                    fieldGroupName
-                  }
-                }
-                pros {
-                  fieldGroupName
-                  proContent
-                }
-                questionsList {
-                  fieldGroupName
-                  question {
-                    answer
-                    fieldGroupName
-                    questionText
-                  }
-                }
-                specifications {
-                  fieldGroupName
-                  specification
                 }
               }
+              fieldGroupName
+              productImage
+              pros {
+                fieldGroupName
+                proContent
+              }
+              questionsList {
+                fieldGroupName
+                question {
+                  answer
+                  fieldGroupName
+                  questionText
+                }
+              }
+              specifications {
+                fieldGroupName
+                specification
+              }
+            }
+            status
+          }
+        }
+        publishDate
+        seoTags
+        articleImage {
+          localFile {
+            childImageSharp {
+              gatsbyImageData
             }
           }
-          publishDate
-          seoTags
+          altText
+          description
+          id
+          slug
+          title
         }
       }
+      articleCategories {
+        nodes {
+          id
+          name
+          slug
+        }
+      }
+      id
+      link
+      slug
+      content
     }
   }
 }

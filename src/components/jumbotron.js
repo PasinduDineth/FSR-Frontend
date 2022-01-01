@@ -15,7 +15,6 @@ const onClickNewsletter = () => {
     if(email.isConfirmed) {
       addToMailchimp(email.value) // listFields are optional if you are only capturing the email address.
       .then(data => {
-        console.log(data)
         Swal.fire({
         title: data.result.toUpperCase(),
         type: data.result,

@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
 const SEO = ({seo}) => {
-  const data = seo.article ? seo : seo.wordPress.pages.edges[0].node.basicSettings;
+  const data = seo.article ? seo : seo.allWpPage.nodes[0].basicSettings;
 
   const url = "http://www.findsomereviews.com"
   // Merge default and page-specific SEO values
