@@ -9,11 +9,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/main.scss'
 
 export default function BlogPost({ data }) {
-    const article = data.strapiArticle;
+    const { wordPress } = data;
+    const { articleBy } = wordPress;
     const seo = {
-        metaTitle: article.title,
-        metaDescription: article.description,
-        shareImage: article.image,
+        metaTitle: articleBy.title,
+        metaDescription: articleBy.description,
+        shareImage: articleBy.article.articleImage.sourceUrl,
         article: true,
     };
     return (
@@ -22,7 +23,7 @@ export default function BlogPost({ data }) {
                 <JumbotronArtical data="Test"/>
                 <div className="articalMain">
                     <div className="articalSection">
-                        {article.SingleProduct ? <SingleArticleContent article={article}/> :<ArticleContent article={article} />}
+                        {articleBy.article.isArticleContainSingleProduct ? <SingleArticleContent article={articleBy}/> :<ArticleContent article={articleBy} />}
                     </div>
                     <div className="sidebarSection">
                         <Sidebar />
@@ -34,57 +35,81 @@ export default function BlogPost({ data }) {
   }
   export const query = graphql`
   query ArticleQuery($slug: String!) {
-    strapiArticle(slug: { eq: $slug }, status: { eq: "published" }) {
-      strapiId
-      title
-      description
-      content
-      publishedAt
-      SingleProduct
-      SeoTags
-      products {
-        Description
-        Name
-        productImage
-        ButtonLink
-        id
-        Features {
-          id
-          FeatureName
-          FeatureData
-        }
-        Cons {
-          Cons
-          id
-        }
-        Pros {
-          Pros
-          id
-        }
-        AdSlot
-        Question {
-          QuestionText
-          Answer
-          id
+    wordPress {
+        articleBy(slug: $slug) {
+            articleCategories {
+                nodes {
+                  articleCategoryId
+                  name
+                }
+              }
+            articleId
+            content
+            date
+            link
+            id
+            article {
+              description
+              fieldGroupName
+              isArticleContainSingleProduct
+              offerText
+              postSlug
+              products {
+                ... on WordPress_Product {
+                  id
+                  content
+                  productId
+                  title
+                  slug
+                  products {
+                    adSlot
+                    buttonLink
+                    fieldGroupName
+                    productImage
+                    cons {
+                      conContent
+                      fieldGroupName
+                    }
+                    features {
+                      feature {
+                        featureData
+                        featureName
+                        fieldGroupName
+                      }
+                      fieldGroupName
+                    }
+                    pros {
+                      fieldGroupName
+                      proContent
+                    }
+                    questionsList {
+                      fieldGroupName
+                      question {
+                        answer
+                        fieldGroupName
+                        questionText
+                      }
+                    }
+                    specifications {
+                      fieldGroupName
+                      specification
+                    }
+                  }
+                }
+              }
+              articleImage {
+                altText
+                authorId
+                description
+                id
+                link
+                sourceUrl
+              }
+              publishDate
+              seoTags
+            }
+            title
         }
       }
-      image {
-        publicURL
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-        }
-      }
-      category {
-        name
-      }
-      author {
-        name
-        picture {
-          childImageSharp {
-            gatsbyImageData(width: 30)
-          }
-        }
-      }
-    }
   }
 `

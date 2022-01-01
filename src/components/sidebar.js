@@ -18,8 +18,8 @@ class Sidebar extends React.Component {
                 <h5 className="cardTitle mb-0 pb-2">CATEGORIES</h5>
                 <hr className="hr"/>
                 <ListGroup className="categoryMain">
-                {categoryData.allStrapiCategory.edges.map((category, i) => (
-                    <ListGroupItem className="categoryItem" tag="button" action><span uk-icon="icon: triangle-right" className="icon"></span><Link to={`/category/${category.node.slug}`}> {category.node.name}</Link></ListGroupItem>
+                {categoryData.wordPress.articleCategories.nodes.map((category, i) => (
+                    <ListGroupItem className="categoryItem" tag="button" action><span uk-icon="icon: triangle-right" className="icon"></span><Link to={`/category/${category.slug}`}> {category.name}</Link></ListGroupItem>
                   ))}
                 </ListGroup>
             </div>
@@ -34,17 +34,30 @@ export default props => (
         query={graphql
           `
           query {
-            strapiGlobal {
-              siteName
-            }
-            allStrapiCategory {
-              edges {
-                node {
-                  slug
-                  name
+            wordPress {
+                articleCategories {
+                  nodes {
+                    articleCategoryId
+                    name
+                    slug
+                  }
+                }
+                pages {
+                  edges {
+                    node {
+                      basicSettings {
+                        fieldGroupName
+                        siteTitle
+                        heroTitle
+                        siteMetaDescription
+                        favicon {
+                          link
+                        }
+                      }
+                    }
+                  }
                 }
               }
-            }
           }
         `    
         }

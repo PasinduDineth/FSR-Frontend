@@ -7,15 +7,17 @@ import Sidebar from "../components/sidebar";
 import "../styles/main.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// @Todo Categories, Tags, Images, Multiple products, sidebar
+
 const IndexPage = () => {
   const data = useStaticQuery(query);
   return (
-    <Layout seo={data.strapiHomepage.seo}>
+    <Layout seo={data}>
         <div>
-          <JumbotronSection data={data.strapiHomepage.hero.title}/>
+          <JumbotronSection/>
           <div className="articalMain">
               <div className="articalSection">
-                <ArticlesComponent articles={data.allStrapiArticle.edges} />
+                <ArticlesComponent articles={data.wordPress.articles} />
               </div>
               <div className="sidebarSection">
                 <Sidebar />
@@ -27,47 +29,101 @@ const IndexPage = () => {
 };
 
 const query = graphql`
-  query {
-    strapiHomepage {
-      hero {
-        title
-      }
-      seo {
-        metaTitle
-        metaDescription
-        shareImage {
-          publicURL
+query {
+  wordPress {
+    pages {
+      edges {
+        node {
+          basicSettings {
+            fieldGroupName
+            siteTitle
+            heroTitle
+            siteMetaDescription
+            favicon {
+              link
+            }
+          }
         }
       }
     }
-    allStrapiArticle(filter: { status: { eq: "published" } }) {
-      edges {
-        node {
-          strapiId
-          slug
-          title
+    articles {
+      nodes {
+        title
+        articleCategories {
+          nodes {
+            articleCategoryId
+            name
+          }
+        }
+        id
+        slug
+        articleId
+        content
+        date
+        status
+        uri
+        article {
           description
-          OfferText
-          category {
-            name
+          offerText
+          articleImage {
+            id
+            link
           }
-          image {
-            childImageSharp {
-              gatsbyImageData(width: 800, height: 500)
-            }
-          }
-          author {
-            name
-            picture {
-              childImageSharp {
-                gatsbyImageData(width: 30, height: 30)
+          fieldGroupName
+          isArticleContainSingleProduct
+          postSlug
+          products {
+            ... on WordPress_Product {
+              id
+              content
+              date
+              slug
+              title
+              productId
+              products {
+                adSlot
+                buttonLink
+                fieldGroupName
+                productImage
+                cons {
+                  conContent
+                  fieldGroupName
+                }
+                features {
+                  fieldGroupName
+                  feature {
+                    featureData
+                    featureName
+                    fieldGroupName
+                  }
+                }
+                pros {
+                  fieldGroupName
+                  proContent
+                }
+                questionsList {
+                  fieldGroupName
+                  question {
+                    answer
+                    fieldGroupName
+                    questionText
+                  }
+                }
+                specifications {
+                  fieldGroupName
+                  specification
+                }
               }
             }
           }
+          publishDate
+          seoTags
         }
       }
     }
   }
+}
+  
 `;
 
 export default IndexPage;

@@ -3,15 +3,26 @@ module.exports = {
     siteUrl: `https://www.findsomereviews.com`,
   },
     plugins: [
+        // {
+        //     resolve: "gatsby-source-strapi",
+        //     options: {
+        //       apiURL: process.env.API_URL || "http://localhost:1337",
+        //       contentTypes: ["article", "category", "writer"],
+        //       singleTypes: [`homepage`, `global`],
+        //       queryLimit: 1000,
+        //     },
+        //   },
         {
-            resolve: "gatsby-source-strapi",
-            options: {
-              apiURL: process.env.API_URL || "http://localhost:1337",
-              contentTypes: ["article", "category", "writer"],
-              singleTypes: [`homepage`, `global`],
-              queryLimit: 1000,
-            },
-          },
+          resolve: "gatsby-source-graphql",
+          options: {
+            // Arbitrary name for the remote schema Query type
+            typeName: "WordPress",
+            // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
+            fieldName: "wordPress",
+            // Url to query from
+            url: "https://strapi.findsomereviews.com/graphql",
+          }
+        },
           "gatsby-plugin-image",
           "gatsby-transformer-sharp",
           "gatsby-plugin-sharp",

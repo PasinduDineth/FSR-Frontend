@@ -10,25 +10,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const HomePageArticalsList = ({ articles }) => {
   return (
     <div className="container mt-3">
-        {articles.map((article, i) => {
+        {articles.nodes.map((article, i) => {
               return (
-                <div className="item">
+                <div className="item" key={article.id}>
                   <Card className="card">
                     <GatsbyImage
                       className="cardImage"
-                      alt={article.node.title}
-                      image={article.node.image.childImageSharp.gatsbyImageData}
+                      alt={article.title}
+                      image={article.article.articleImage}
                     />
-                    {article.node.OfferText &&
-                      <div class="card-img-overlay specialOfferContainer">
-                          <Badge className="tag specialOffer m-1 animate__animated animate__bounceIn">{article.node.OfferText}</Badge>
+                    {article.article.offerText &&
+                      <div className="card-img-overlay specialOfferContainer">
+                          <Badge className="tag specialOffer m-1 animate__animated animate__bounceIn">{article.article.offerText}</Badge>
                       </div>
                     }
                     <CardBody>
-                      <CardTitle tag="h5" className="cardTitle">{article.node.title}</CardTitle>
-                      <CardSubtitle tag="h6" className="cardSubTitle">{article.node.category.name}</CardSubtitle>
-                      <CardText className="cardDescription mb-2 limitLinesDescription">{article.node.description}</CardText>
-                      <Link to={`/review/${article.node.slug}`} className="uk-link-reset"><button className="moreButton">VIEW MORE</button></Link>
+                      <CardTitle tag="h5" className="cardTitle">{article.title}</CardTitle>
+                      <CardSubtitle tag="h6" className="cardSubTitle">{article.articleCategories.nodes[0].name}</CardSubtitle>
+                      <CardText className="cardDescription mb-2 limitLinesDescription">{article.article.description}</CardText>
+                      <Link to={`/review/${article.slug}`} className="uk-link-reset"><button className="moreButton">VIEW MORE</button></Link>
                     </CardBody>
                   </Card>
                 </div>
