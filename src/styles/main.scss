@@ -1,0 +1,462 @@
+$yellow: #fe9b1a;
+$purple: #4a2c76;
+$white: #f4f4f4;
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+  .container::after {
+    content: "";
+    flex: auto;
+  }
+  .item {
+      flex: 0 0 210px;
+      margin: 10px;
+  }
+  @media (max-width: 515px) {
+    .item {
+      flex: unset;
+      margin: 10px;
+  }
+  }
+  body {
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    background-color: $white !important;
+  }
+  .jumbotronMain {
+    height: 45vh;
+    display: flex;
+    text-align: center;
+    /* background-image: url("https://i.ibb.co/B351z3b/7395.png");
+    background-size: cover; */
+    background-color: $white;
+    align-items: center;
+    margin-top: 55px !important;
+  }
+  .headerText {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 60px;
+    color: $purple;
+  }
+  .headerSubText {
+    margin-top: 0px;
+    font-weight: 300;
+    color: $yellow;
+  }
+  
+  .navbarMain {
+    background-color: #fff;
+  }
+  .logo {
+    margin-left: 5px;
+    font-weight: 700;
+    color: $yellow;
+  }
+  .navItem {
+    font-weight: 600 !important;
+    color: $purple !important;
+  }
+  .navItem:hover {
+    color: $yellow !important;
+  }
+  .jumboContainer {
+    background-color: #fff;
+  }
+  .button {
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: $yellow;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    color: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    }
+  
+  .button:hover {
+    background-color: $purple;
+    box-shadow: 0px 15px 20px rgba(74, 44, 118, 0.1);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+  .card {
+    border-radius: 10px !important;
+    border: 0px !important;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  .cardTitle {
+    text-transform: uppercase;
+    color: $purple;
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    font-weight: 700;
+  }
+  .cardSubTitle {
+    color: #6e6e6e;
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .cardDescription {
+    color: #313131;
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    font-weight: 400;
+    margin: 0px !important;
+  }
+  .moreButton {
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: $yellow;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    color: #fff;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 12px;
+    }
+  
+  .moreButton:hover {
+    background-color: $purple;
+    box-shadow: 0px 15px 20px rgba(74, 44, 118, 0.1);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .articalMain {
+    display: flex;
+    padding-left: 3%;
+    padding-right: 3%;
+    flex-direction: row;
+  }
+  @media (max-width: 800px) {
+    .articalMain {
+      display: flex;
+      padding-left: 3%;
+      padding-right: 3%;
+      flex-direction: column;
+    }
+    .sidebarSection{
+      flex: 0.20;
+      /* background-color: #fff !important; */
+      margin-left: 0px !important;
+      margin-top: 10px !important;
+    }
+  }
+  .articalSection {
+    flex: 0.80;
+    background-color: #fff !important;
+  }
+  .sidebarSection{
+    flex: 0.20;
+    /* background-color: #fff !important; */
+    margin-left: 30px;
+  }
+  .sidebarItems {
+    text-align: center;
+  }
+  .hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid $yellow;
+      margin-left: 1em;
+      margin-right: 1em;
+      margin-top: 0px !important;
+      padding: 0;
+  }
+  .cardImage {
+    border-top-right-radius: 10px !important ;
+    border-top-left-radius: 10px !important ;
+  }
+  .noticeArea {
+    background-color: #fff;
+  }
+  .categoriesArea {
+    background-color: #fff; 
+  }
+  .categoryMain {
+    text-align: left;
+  }
+  .categoryItem {
+    border: 0px !important;
+    color: #313131 !important;
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0px !important;
+  }
+  a {
+    color: $purple !important;
+  }
+  .icon {
+    color: $yellow !important;
+  }
+  .iconAnswer {
+    color: $purple !important;
+  }
+  .limitLinesDescription {
+    overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 5; /* number of lines to show */
+     -webkit-box-orient: vertical;
+  }
+  .limitLinesTitle {
+    overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 1; /* number of lines to show */
+     -webkit-box-orient: vertical;
+  }
+  .fsr {
+    color: $purple;
+    margin-left: 10px;
+    font-weight: 700;
+  }
+  .articalHeaderText {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 35px;
+    color: $purple;
+    font-family: 'Barlow Semi Condensed', sans-serif !important;
+    text-transform: uppercase !important;
+  }
+  .articalCategoryHeaderText {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 25px;
+    color: $purple;
+  }
+  .jumbotronArticalMain {
+    height: 25vh;
+    display: flex;
+    text-align: center;
+    /* background-image: url("https://i.ibb.co/B351z3b/7395.png");
+    background-size: cover; */
+    background-color: $white;
+    align-items: center;
+    margin-top: 55px !important;
+  }
+  .articalNameHeaderText {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 25px;
+    color: $purple;
+    text-transform: uppercase;
+    padding: 0px !important;
+  }
+  .articalDate {
+    margin: 0px !important;
+    font-weight: 400;
+    /* font-size: 25px; */
+    color: #313131;
+    text-transform: uppercase;
+    padding: 0px !important;
+  }
+  .articalCategory {
+    margin: 0px !important;
+    font-weight: 600;
+    /* font-size: 25px; */
+    color: $yellow;
+    text-transform: uppercase;
+    padding: 0px !important;
+  }
+  a:hover {
+    text-decoration: none !important;
+  }
+  .prodcutName {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 20px;
+    color: $purple;
+    text-transform: uppercase;
+    padding: 0px !important;
+  }
+  .prosconsMain {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .propsSection {
+    flex: 0.5;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+  }
+  .consSection {
+    flex: 0.5;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+  }
+  .prosTitle {
+    margin: 0px !important;
+    font-weight: 700;
+    font-size: 18px;
+    color: $purple;
+    text-transform: uppercase;
+    padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 4px !important;
+    border-left: 3px solid $purple;
+  }
+  .consTitle {
+    margin: 0px !important;
+    font-weight: 700;
+    font-size: 18px;
+    color: $yellow;
+    text-transform: uppercase;
+    padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 4px !important;
+    border-left: 3px solid $yellow;
+  }
+  .proconItem {
+    margin: 0px !important;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-right: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  .proListIcon {
+    color: $purple !important;
+  }
+  .iframe {
+    display: flex;
+    flex: 1;
+  }
+  .articalImage {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+  .buyAmazon {
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: $yellow !important;
+    border: none;
+    border-radius: 45px !important;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    color: #fff !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    }
+  
+  .buyAmazon:hover {
+    background-color: #313131 !important;
+    box-shadow: 0px 15px 20px rgba(74, 44, 118, 0.1) !important;
+    color: #fff;
+  }
+  .tag {
+    text-transform: uppercase;
+    font-weight: 500 !important;
+    background-color: $purple;
+    font-size: 13px;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    }
+  
+  .tag:hover {
+    background-color: $yellow;
+    box-shadow: 0px 15px 20px rgba(74, 44, 118, 0.1);
+    color: #fff;
+  }
+  .extraTags {
+    margin: 0px !important;
+    font-weight: 700;
+    font-size: 20px;
+    color: $yellow;
+    text-transform: uppercase;
+    padding: 0px !important;
+  }
+  .specialOffer {
+    background-color: $yellow;
+  }
+  .specialOfferContainer {
+    left: unset !important;
+    padding: unset !important;
+  }
+  
+  .SpecName {
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    text-transform: uppercase;
+    margin: 5px 0px 5px 10px !important;
+  }
+  .specData {
+    margin: 0px !important;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .SpecNameWrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    background-color: $purple;
+  }
+  .specificationDataWrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    align-items: center;
+    padding: 1%;
+    text-align:right;
+  }
+  /* SMARTPHONES PORTRAIT */
+@media only screen and (min-width: 300px) {
+  .specificationListMain {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+}
+
+/* SMARTPHONES LANDSCAPE */
+@media only screen and (min-width: 480px) {
+  .specificationListMain {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+}
+
+/* TABLETS PORTRAIT */
+@media only screen and (min-width: 768px) {
+  .specificationListMain {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+}
+
+
+/* TABLET LANDSCAPE / DESKTOP */
+@media only screen and (min-width: 1024px) {
+  .specificationListMain {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+  }
+}

@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.0.0",
-    "gatsby": "^3.6.2",
+    "gatsby": "^3.0.0-next.0",
     "gatsby-plugin-google-gtag": "^3.6.0",
     "gatsby-plugin-htaccess": "^1.4.0",
     "gatsby-plugin-image": "^1.4.1",
@@ -29,7 +29,9 @@
     "gatsby-plugin-sharp": "^3.4.2",
     "gatsby-plugin-sitemap": "^5.4.0",
     "gatsby-source-filesystem": "^3.3.0",
+    "gatsby-source-graphql": "^4.4.0",
     "gatsby-source-strapi": "0.0.12",
+    "gatsby-source-wordpress": "^6.4.0",
     "gatsby-transformer-sharp": "^3.4.0",
     "lodash": "^4.17.21",
     "path-browserify": "^1.0.1",

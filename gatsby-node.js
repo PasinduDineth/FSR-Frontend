@@ -27,54 +27,60 @@ exports.onCreateWebpackConfig = ({
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
+
+  // fetching articles from WP
   const articlesResult = await graphql(
     `
-  {
-    allStrapiArticle {
-      edges {
-        node {
+    {
+      allWpArticle {
+        nodes {
+          title
           id
+          link
           slug
         }
       }
     }
-  }
     `
   )
+  // fetching category from WP
   const categoryResult = await graphql(
     `
-  {
-    allStrapiCategory {
-      edges {
-        node {
-          slug
+    query MyQuery {
+      allWpArticleCategory {
+        nodes {
           name
+          slug
+          id
         }
       }
     }
-  }
     `
   )
 
+  // fetching tags from WP
   const tagsResult = await graphql(
     `{
-    allStrapiArticle {
-      edges {
-        node {
-          SeoTags
+      allWpArticle {
+        nodes {
+          article {
+            seoTags
+          }
         }
       }
-    }
   }
     `
   )
   
-  if (articlesResult.errors || categoryResult.errors || tagsResult.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query.`)
-    return
-  }
+  // // checking erros
+  // if (articlesResult.errors || categoryResult.errors || tagsResult.errors) {
+  //   reporter.panicOnBuild(`Error while running GraphQL query.`)
+  //   return
+  // }
+
+  // creating article pages
   const blogPostTemplate = path.resolve(`src/templates/article.js`)
-  articlesResult.data.allStrapiArticle.edges.forEach(({ node }) => {
+  articlesResult.data.allWpArticle.nodes.forEach(( node ) => {
     createPage({
       path: `/review/${node.slug}`,
       component: blogPostTemplate,
@@ -83,8 +89,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
+
+  // creating category pages
   const categoryTemplate = path.resolve(`src/templates/category.js`)
-  categoryResult.data.allStrapiCategory.edges.forEach(({ node }) => {
+  categoryResult.data.allWpArticleCategory.nodes.forEach((node ) => {
     createPage({
       path: `/category/${node.slug}`,
       component: categoryTemplate,
@@ -93,10 +101,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
+
+  // creating custom tag pages
   const tagTemplate = path.resolve(`src/templates/tag.js`)
   let tags = []
-  tagsResult.data.allStrapiArticle.edges.forEach(({ node }) => {
-    node.SeoTags && node.SeoTags.split(',').map(el=> {
+  tagsResult.data.allWpArticle.nodes.forEach(({ article }) => {
+    article.seoTags && article.seoTags.split(',').map(el=> {
       tags.push(el.trim())
     })
   })
@@ -109,6 +119,5 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
-
 }
   

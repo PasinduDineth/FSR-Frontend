@@ -3,15 +3,43 @@ module.exports = {
     siteUrl: `https://www.findsomereviews.com`,
   },
     plugins: [
+        // {
+        //     resolve: "gatsby-source-strapi",
+        //     options: {
+        //       apiURL: process.env.API_URL || "http://localhost:1337",
+        //       contentTypes: ["article", "category", "writer"],
+        //       singleTypes: [`homepage`, `global`],
+        //       queryLimit: 1000,
+        //     },
+        //   },
+        // {
+        //   resolve: "gatsby-source-graphql",
+        //   options: {
+        //     // Arbitrary name for the remote schema Query type
+        //     typeName: "WordPress",
+        //     // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
+        //     fieldName: "wordPress",
+        //     // Url to query from
+        //     url: "https://strapi.findsomereviews.com/graphql",
+        //   }
+        // }
         {
-            resolve: "gatsby-source-strapi",
-            options: {
-              apiURL: process.env.API_URL || "http://localhost:1337",
-              contentTypes: ["article", "category", "writer"],
-              singleTypes: [`homepage`, `global`],
-              queryLimit: 1000,
-            },
+          /**
+           * First up is the WordPress source plugin that connects Gatsby
+           * to your WordPress site.
+           *
+           * visit the plugin docs to learn more
+           * https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/README.md
+           *
+           */
+          resolve: `gatsby-source-wordpress`,
+          options: {
+            // the only required plugin option for WordPress is the GraphQL url.
+            url:
+              process.env.WPGRAPHQL_URL ||
+              `https://strapi.findsomereviews.com/graphql`,
           },
+        },
           "gatsby-plugin-image",
           "gatsby-transformer-sharp",
           "gatsby-plugin-sharp",
