@@ -8,7 +8,7 @@ const _ = require('lodash');
 
 const ArticalContent = ({ article }) => {
   const { name } = article.articleCategories.nodes[0]
-
+  console.log("single", article)
   return (
     <div className="articalReadSectionMain p-4">
         <div>
@@ -26,8 +26,8 @@ const ArticalContent = ({ article }) => {
             return (
               <>
               {
-                prod.productImage &&
-                <div className="mt-4" dangerouslySetInnerHTML={{__html: prod.productImage}}></div>
+                prod.products.productImage &&
+                <div className="mt-4" dangerouslySetInnerHTML={{__html: prod.products.productImage}}></div>
               }
               <Markdown source={prod.content} escapeHtml={false} />
               <hr/>
