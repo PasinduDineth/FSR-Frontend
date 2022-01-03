@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout";
 import JumbotronArtical from "../components/jumbotronArticlePage";
 import Sidebar from "../components/sidebar";
-import ArticleContent from "../components/articleContent";
+import ArticleContent from "../components/multipleArticleContent";
 import SingleArticleContent from "../components/singleArticleContent";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/main.scss'
@@ -23,7 +23,7 @@ export default function BlogPost({ data }) {
                 <JumbotronArtical data="Test"/>
                 <div className="articalMain">
                     <div className="articalSection">
-                        {nodes[0].article.isArticleContainSingleProduct ? <SingleArticleContent article={nodes[0]}/> :<ArticleContent article={nodes[0]} />}
+                        {nodes[0].article.isArticleContainSingleProduct === "true" ? <SingleArticleContent article={nodes[0]}/> :<ArticleContent article={nodes[0]} />}
                     </div>
                     <div className="sidebarSection">
                         <Sidebar />
